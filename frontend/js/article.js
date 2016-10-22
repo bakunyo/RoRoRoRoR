@@ -1,14 +1,10 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { createStore } from 'redux'
+import reducer from './reducer'
 import Comments from './comments'
 
-const title = 'Article Title';
-const body = 'Article Body';
-const comments = [
-  'Good morning.',
-  'Good afternoon.',
-  'Good bye.'
-];
+const store = createStore(reducer)
 
 class Article extends React.Component {
   render() {
