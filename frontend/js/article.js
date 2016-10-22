@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
+import Comments from './comments'
 
 const title = 'Article Title';
 const body = 'Article Body';
@@ -10,6 +11,7 @@ class Article extends React.Component {
       <div className="article">
         <h1>{ title }</h1>
         <div>{ body }</div>
+        <Comments />
       </div>
     );
   }
