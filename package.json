@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "bakunyo",
   "license": "ISC",
+  "scripts": {
+    "webpack": "webpack-dev-server --colors --hot"
+  },
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
