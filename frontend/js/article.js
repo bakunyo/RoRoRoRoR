@@ -1,51 +1,49 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider, connect } from 'react-redux'
+import { Adrenaline, container } from 'adrenaline'
 
-import reducer from './reducer'
 import Comments from './comments'
 import CommentForm from './comment_form'
 
-const store = createStore(reducer)
-
 class Article extends React.Component {
   render() {
+    const { title, body } = this.props
+
     return (
       <div className="article">
-        <h1>{ this.props.title }</h1>
-        <div>{ this.props.body }</div>
-        <Comments comments={ this.props.comments }/>
+        <h1>{ title }</h1>
+        <div>{ body }</div>
         <CommentForm addComment={ this.props.addComment } />
       </div>
     );
   }
 }
 
-// action creators
-const sendComment = (value) => {
-  return {
-    type: 'SEND_COMMENT',
-    value: value
+class ArticleContainer extends React.Component {
+  render() {
+    let { _, article } = this.props
+    article = article || {}
+
+    return (
+      <Article title={ article.title } body={ article.body } />
+    )
   }
 }
 
-// container
-const mapStateToProps = (state) => {
-  return state;
-}
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addComment(value) {
-      dispatch(sendComment(value));
+const Container = container({
+  query: `
+    query {
+      article(id: 2) {
+        title,
+        body,
+      }
     }
-  }
-}
-const Container = connect(mapStateToProps, mapDispatchToProps)(Article);
+  `
+})(ArticleContainer);
 
 render(
-  <Provider store={ store }>
+  <Adrenaline endpoint="/queries">
     <Container />
-  </Provider>,
+  </Adrenaline>,
   document.getElementById('article')
 );
