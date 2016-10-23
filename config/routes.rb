@@ -3,4 +3,8 @@ Rails.application.routes.draw do
   resources :articles, only: :index
 
   resources :queries, only: :create
+
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: '/queries'
+  end
 end
